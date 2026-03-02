@@ -583,17 +583,25 @@ body{
   }
 }
 
-/* ===== Floating Navigation ===== */
+/* ===== Floating Navigation (fixed, outside GSAP stacking context) ===== */
 
 .floating-nav{
-  position:absolute;
-  inset:0;
+  position:fixed;
+  top:50%;
+  left:0;
+  right:0;
   pointer-events:none;
-  z-index:10;
+  z-index:9000;
+  opacity:0;
+  transition:opacity .4s ease;
+}
+
+.floating-nav.nav-visible{
+  opacity:1;
 }
 
 .nav-btn{
-  position:absolute;
+  position:fixed;
   top:50%;
   transform:translateY(-50%);
   width:clamp(52px, 6vw, 70px);
@@ -607,7 +615,7 @@ body{
   font-size:2rem;
   cursor:pointer;
   pointer-events:auto;
-  transition:all .35s cubic-bezier(.4,0,.2,1);
+  transition:background .35s cubic-bezier(.4,0,.2,1), border-color .35s, box-shadow .35s, transform .35s;
   display:flex;
   align-items:center;
   justify-content:center;

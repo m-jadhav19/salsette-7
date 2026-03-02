@@ -100,6 +100,7 @@ export default function BandSection() {
   const [track, setTrack] = useState<iTunesTrack | null>(null);
   const [sweepActive, setSweepActive] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [navVisible, setNavVisible] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const spotlightRef = useRef<HTMLDivElement | null>(null);
@@ -210,6 +211,18 @@ export default function BandSection() {
     };
   }, [index, updateArtist]);
 
+  // Show/hide fixed nav based on section visibility
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setNavVisible(entry.intersectionRatio >= 0.4),
+      { threshold: [0, 0.4, 1] }
+    );
+    obs.observe(section);
+    return () => obs.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!stageRef.current) return;
     gsap.killTweensOf(stageRef.current);
@@ -300,6 +313,41 @@ export default function BandSection() {
   }, []);
 
   return (
+    <>
+    <div className={`floating-nav${navVisible ? " nav-visible" : ""}`}>
+        <button
+          ref={prevBtnRef}
+          type="button"
+          id="prevBtn"
+          className="nav-btn left"
+          onClick={() => {
+            audioEnabledRef.current = true;
+            playClickSound();
+            setIndex((i) => (i - 1 + artists.length) % artists.length);
+          }}
+          aria-label="Previous artist"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <button
+          ref={nextBtnRef}
+          type="button"
+          id="nextBtn"
+          className="nav-btn right"
+          onClick={() => {
+            audioEnabledRef.current = true;
+            playClickSound();
+            setIndex((i) => (i + 1) % artists.length);
+          }}
+          aria-label="Next artist"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
     <section ref={sectionRef} className="band-section scroll-panel section">
       <div className="section-content">
       <div className="panel-inner section-inner">
@@ -398,40 +446,7 @@ export default function BandSection() {
       </div>
 
       </div>
-      <div className="floating-nav">
-        <button
-          ref={prevBtnRef}
-          type="button"
-          id="prevBtn"
-          className="nav-btn left"
-          onClick={() => {
-            audioEnabledRef.current = true;
-            playClickSound();
-            setIndex((i) => (i - 1 + artists.length) % artists.length);
-          }}
-          aria-label="Previous artist"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <button
-          ref={nextBtnRef}
-          type="button"
-          id="nextBtn"
-          className="nav-btn right"
-          onClick={() => {
-            audioEnabledRef.current = true;
-            playClickSound();
-            setIndex((i) => (i + 1) % artists.length);
-          }}
-          aria-label="Next artist"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
     </section>
+    </>
   );
 }
