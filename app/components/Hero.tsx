@@ -66,25 +66,47 @@ export default function Hero() {
           "-=0.6"
         );
 
-      const content = document.querySelector(".title-group");
+      const content = document.querySelector(".title-group") as HTMLElement | null;
+      if (!content) return;
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const tiltStrength = prefersReducedMotion ? 0 : Math.min(24, 12 + window.innerWidth / 80);
+      let rafId = 0;
+      let targetX = 0;
+      let targetY = 0;
 
       const handleMouseMove = (e: MouseEvent) => {
-        if (!content) return;
-        const x = e.clientX / window.innerWidth - 0.5;
-        const y = e.clientY / window.innerHeight - 0.5;
+        targetX = (e.clientX / window.innerWidth - 0.5) * tiltStrength;
+        targetY = (e.clientY / window.innerHeight - 0.5) * -tiltStrength;
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          rafId = 0;
+          gsap.to(content, {
+            rotateY: targetX,
+            rotateX: targetY,
+            duration: 0.6,
+            ease: "power2.out",
+            overwrite: true,
+          });
+        });
+      };
 
+      const handleMouseLeave = () => {
         gsap.to(content, {
-          rotateY: x * 40,
-          rotateX: -y * 40,
+          rotateY: 0,
+          rotateX: 0,
           duration: 0.8,
           ease: "power2.out",
         });
       };
 
-      window.addEventListener("mousemove", handleMouseMove);
+      heroRef.current.addEventListener("mousemove", handleMouseMove, { passive: true });
+      heroRef.current.addEventListener("mouseleave", handleMouseLeave);
 
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
+        heroRef.current?.removeEventListener("mousemove", handleMouseMove);
+        heroRef.current?.removeEventListener("mouseleave", handleMouseLeave);
+        if (rafId) cancelAnimationFrame(rafId);
       };
     }, heroRef);
 
