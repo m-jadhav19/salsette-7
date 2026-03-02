@@ -300,8 +300,9 @@ export default function BandSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="band-section scroll-panel">
-      <div className="panel-inner">
+    <section ref={sectionRef} className="band-section scroll-panel section">
+      <div className="section-content">
+      <div className="panel-inner section-inner">
         <div className="band-bg-image" />
         <div className="band-bg-gradient" />
         <div className="spotlight-wrap">
@@ -396,6 +397,7 @@ export default function BandSection() {
         />
       </div>
 
+      </div>
       <div className="floating-nav">
         <button
           ref={prevBtnRef}

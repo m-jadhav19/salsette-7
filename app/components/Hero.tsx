@@ -92,11 +92,12 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={heroRef} className="hero scroll-panel">
-      <div className="depth-layer" />
-      <div className="bg-glow" />
-
-      <div className="hero-content">
+    <section ref={heroRef} className="hero scroll-panel section">
+      <div className="section-content">
+        <div className="section-inner">
+          <div className="depth-layer" />
+          <div className="bg-glow" />
+          <div className="hero-content">
         <div className="title-wrapper">
           <div className="title-group">
             <h1 className="salsette">SALSETTE</h1>
@@ -113,9 +114,10 @@ export default function Hero() {
         <div className="cta">
           <a href="#contact">BOOK US</a>
         </div>
+          </div>
+          <div className="grain" />
+        </div>
       </div>
-
-      <div className="grain" />
     </section>
   );
 }

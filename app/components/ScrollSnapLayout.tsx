@@ -11,30 +11,54 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ScrollSnapLayout() {
   useEffect(() => {
-    const panels = gsap.utils.toArray<HTMLElement>(".scroll-panel");
+    const panels = gsap.utils.toArray<HTMLElement>(".section");
+    panels.pop(); // exclude last section (Contact) from scale/fade
 
     panels.forEach((panel, i) => {
-      const isFirst = i === 0;
-      const target = panel.querySelector<HTMLElement>(".panel-inner") ?? panel;
-      const scrollTL = gsap.timeline({
+      const innerPanel = panel.querySelector<HTMLElement>(".section-inner");
+      const contentEl = innerPanel ?? panel;
+      const panelHeight = contentEl.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const difference = panelHeight - windowHeight;
+
+      // ratio for fake-scrolling when content is taller than viewport
+      const fakeScrollRatio = difference > 0 ? difference / (difference + windowHeight) : 0;
+
+      if (fakeScrollRatio && panel instanceof HTMLElement) {
+        panel.style.marginBottom = `${panelHeight * fakeScrollRatio}px`;
+      }
+
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
-          start: "top top",
-          end: "bottom top",
+          start: "bottom bottom",
+          end: fakeScrollRatio ? `+=${contentEl.offsetHeight}` : "bottom top",
+          pinSpacing: false,
           pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          snap: 1,
-          anticipatePin: 1,
+          scrub: true,
         },
       });
 
-      scrollTL.fromTo(
-        target,
-        isFirst ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1 },
-        0
-      );
+      // fake scroll through tall content first
+      if (fakeScrollRatio && innerPanel) {
+        tl.to(
+          innerPanel,
+          {
+            yPercent: -100,
+            y: windowHeight,
+            duration: 1 / (1 - fakeScrollRatio) - 1,
+            ease: "none",
+          },
+          0
+        );
+      }
+
+      tl.fromTo(
+        panel,
+        { scale: 1, opacity: 1 },
+        { scale: 0.7, opacity: 0.5, duration: 0.9 },
+        fakeScrollRatio ? undefined : 0
+      ).to(panel, { opacity: 0, duration: 0.1 });
     });
 
     return () => {
@@ -43,7 +67,7 @@ export default function ScrollSnapLayout() {
   }, []);
 
   return (
-    <main>
+    <main className="slides-wrapper">
       <Hero />
       <BandSection />
       <ContactSection />

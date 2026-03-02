@@ -1,6 +1,8 @@
 export default function ContactSection() {
   return (
-    <section id="contact" className="contact-section scroll-panel">
+    <section id="contact" className="contact-section scroll-panel section">
+      <div className="section-content">
+      <div className="section-inner">
       <div className="contact-bg" />
       <div className="contact-overlay" />
       <div className="contact-content">
@@ -35,6 +37,8 @@ export default function ContactSection() {
             <span>Instagram</span>
           </a>
         </div>
+      </div>
+      </div>
       </div>
     </section>
   );

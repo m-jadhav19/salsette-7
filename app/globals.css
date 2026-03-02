@@ -38,6 +38,11 @@ body{
   perspective:1400px;
 }
 
+.hero .section-content,
+.hero .section-inner{
+  padding:0 1.5rem;
+}
+
 .hero-content{
   position:relative;
   z-index:5;
@@ -193,6 +198,38 @@ body{
 }
 
 /* ================= SCROLL PANELS ================= */
+
+.slides-wrapper{
+  margin-top:0;
+}
+
+.section{
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+
+.section-content{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.section-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
 
 .panel-inner{
   position:absolute;
