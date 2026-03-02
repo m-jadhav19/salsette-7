@@ -1,0 +1,74 @@
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772482999791},"timestamp":1772482999791,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483001601},"timestamp":1772483001601,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483001602,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483003242},"timestamp":1772483003242,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":0},"timestamp":1772483003242,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":9,"totalMs":9},"timestamp":1772483003251,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483005183},"timestamp":1772483005183,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483005184,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":11,"totalMs":12},"timestamp":1772483005195,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483043075},"timestamp":1772483043075,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":5},"timestamp":1772483043080,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":0},"timestamp":1772483043081,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":43,"totalMs":48},"timestamp":1772483043123,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483052520},"timestamp":1772483052520,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":1,"t0":1772483052524},"timestamp":1772483052524,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483052525,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":1},"timestamp":1772483052526,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":24,"totalMs":25},"timestamp":1772483052549,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483054575},"timestamp":1772483054575,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483054578},"timestamp":1772483054578,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":2},"timestamp":1772483054580,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":2},"timestamp":1772483054580,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":16,"totalMs":18},"timestamp":1772483054596,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483057887},"timestamp":1772483057887,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483057891,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":3},"timestamp":1772483057892,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":3,"t0":1772483057890},"timestamp":1772483057890,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":18,"totalMs":19},"timestamp":1772483057909,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483060641},"timestamp":1772483060641,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":4,"t0":1772483060644},"timestamp":1772483060644,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483060645,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":4},"timestamp":1772483060645,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":20,"totalMs":21},"timestamp":1772483060665,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483063213},"timestamp":1772483063213,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":5,"t0":1772483063217},"timestamp":1772483063217,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483063218,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":5},"timestamp":1772483063219,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":24,"totalMs":25},"timestamp":1772483063242,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483129944},"timestamp":1772483129944,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":6},"timestamp":1772483129950,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":0},"timestamp":1772483129951,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":24,"totalMs":30},"timestamp":1772483129974,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483131201},"timestamp":1772483131201,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483131202,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":16,"totalMs":17},"timestamp":1772483131218,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483136430},"timestamp":1772483136430,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483136431,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":19,"totalMs":20,"cached":true},"timestamp":1772483136450,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483142661},"timestamp":1772483142661,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483142662,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":0,"totalMs":1,"fromCache":true},"timestamp":1772483142662,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":0,"t0":1772483152711},"timestamp":1772483152711,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":3},"timestamp":1772483152714,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":0},"timestamp":1772483152715,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":37,"totalMs":40,"fromCache":false},"timestamp":1772483152751,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483160223},"timestamp":1772483160223,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":0,"totalMs":2,"fromCache":true},"timestamp":1772483160230,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":1},"timestamp":1772483160231,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":1,"t0":1772483160228},"timestamp":1772483160228,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":2},"timestamp":1772483160230,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:click","message":"next click","data":{"dir":"next","ts":1772483161865},"timestamp":1772483161865,"hypothesisId":"E"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483161868},"timestamp":1772483161868,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483161869,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":0,"totalMs":1,"fromCache":true},"timestamp":1772483161869,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:stageEffect","message":"stage GSAP run","data":{"index":2},"timestamp":1772483161870,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483182051},"timestamp":1772483182051,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483182052,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":1,"totalMs":2,"fromCache":true},"timestamp":1772483182053,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483188642},"timestamp":1772483188642,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":2},"timestamp":1772483188644,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":1,"totalMs":3,"fromCache":true},"timestamp":1772483188645,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"entry","data":{"index":2,"t0":1772483191067},"timestamp":1772483191067,"hypothesisId":"A"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"pre fetch","data":{"syncMs":1},"timestamp":1772483191068,"hypothesisId":"B"}
+{"sessionId":"6bdf06","location":"BandSection.tsx:updateArtist","message":"post fetch","data":{"fetchMs":0,"totalMs":1,"fromCache":true},"timestamp":1772483191068,"hypothesisId":"A"}
