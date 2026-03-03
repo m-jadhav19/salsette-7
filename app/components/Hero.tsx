@@ -91,34 +91,27 @@ export default function Hero() {
       gsap.set(sweepEl,     { left: "-60%", opacity: 0 });
       gsap.set(sweepGlowEl, { left: "-80%", opacity: 0 });
 
+      /* 7: start scaled up and fully masked (reveal transition like reference) */
+      gsap.set(seven, {
+        "--seven-reveal": 0,
+        scale: 2,
+        opacity: 1,
+        filter: "blur(0px) drop-shadow(0 0 0px rgba(196,162,78,0))",
+      });
+
       const tl = gsap.timeline();
 
-      tl.fromTo(
+      /* 7: radial wipe reveal + scale down (3s ease-out, 1s delay like reference) */
+      tl.to(
         seven,
         {
-          opacity: 0,
-          filter: "blur(32px) drop-shadow(0 0 0px rgba(196,162,78,0))",
-        },
-        {
-          opacity: 1,
-          filter: "blur(0px) drop-shadow(0 0 0px rgba(196,162,78,0))",
-          duration: 1.1,
+          "--seven-reveal": 1,
+          scale: 1,
+          duration: 1.2,
           ease: "power2.out",
-          keyframes: [
-            {
-              filter: "blur(18px) drop-shadow(0 0 48px rgba(196,162,78,0.45))",
-              opacity: 0.6,
-              duration: 0.44,
-              ease: "power1.in",
-            },
-            {
-              filter: "blur(0px) drop-shadow(0 0 0px rgba(196,162,78,0))",
-              opacity: 1,
-              duration: 0.66,
-              ease: "power3.out",
-            },
-          ],
-        }
+          delay: 0.4,
+        },
+        0
       )
       .to(seven, { scaleY: 0.96, scaleX: 1.02, duration: 0.12, ease: "power2.in"         }, "-=0.04")
       .to(seven, { scaleY: 1,    scaleX: 1,    duration: 0.4,  ease: "elastic.out(1,0.5)" })
@@ -168,8 +161,13 @@ export default function Hero() {
         ".cta a, .cta button",
         { y: 20, opacity: 0, filter: "blur(6px)" },
         {
-          y: 0, opacity: 1, filter: "blur(0px)",
-          stagger: 0.09, duration: 0.42, ease: "power3.out",
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          stagger: 0.09,
+          duration: 0.42,
+          ease: "power3.out",
+          clearProps: "opacity,transform,filter",
         },
         "-=0.2"
       )
@@ -261,7 +259,17 @@ export default function Hero() {
       };
     }, heroRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      /* Restore both CTA buttons together via their container (re-render / Strict Mode) */
+      const ctaGroup = heroRef.current?.querySelector<HTMLElement>(".cta-group");
+      if (ctaGroup) {
+        gsap.set(ctaGroup, { opacity: 1, clearProps: "all" });
+        ctaGroup.querySelectorAll<HTMLElement>(".cta a, .cta button").forEach((el) => {
+          gsap.set(el, { opacity: 1, y: 0, filter: "none", clearProps: "all" });
+        });
+      }
+    };
   }, []);
 
   return (
