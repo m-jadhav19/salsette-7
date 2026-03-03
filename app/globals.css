@@ -167,9 +167,9 @@ body{
   inset:0;
   z-index:1;
   background:
-    linear-gradient(to bottom, rgba(9,7,7,.55) 0%, rgba(9,7,7,.05) 30%, rgba(9,7,7,.05) 65%, rgba(9,7,7,.75) 100%),
-    radial-gradient(ellipse 120% 100% at 50% 50%, transparent 25%, rgba(9,7,7,.55) 70%, rgba(9,7,7,.85) 100%),
-    radial-gradient(ellipse 60% 50% at 50% 45%, rgba(80,15,15,.25) 0%, transparent 70%);
+    linear-gradient(to bottom, rgba(9,7,7,.28) 0%, rgba(9,7,7,.02) 30%, rgba(9,7,7,.02) 65%, rgba(9,7,7,.4) 100%),
+    radial-gradient(ellipse 120% 100% at 50% 50%, transparent 35%, rgba(9,7,7,.35) 75%, rgba(9,7,7,.6) 100%),
+    radial-gradient(ellipse 60% 50% at 50% 45%, rgba(80,15,15,.1) 0%, transparent 70%);
   pointer-events:none;
 }
 
@@ -177,7 +177,7 @@ body{
   position:absolute;
   inset:0;
   z-index:2;
-  opacity:.07;
+  opacity:.045;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px;
   pointer-events:none;
@@ -322,13 +322,13 @@ body{
 
 /* CTA */
 .cta{
-  margin-top:3rem;
   display:flex;
   gap:1rem;
   justify-content:center;
   flex-wrap:wrap;
 }
 .cta-group{
+  margin-top:3rem;
   display:flex;
   gap:1rem;
   justify-content:center;
@@ -410,23 +410,64 @@ body{
 
 /* Mobile hero */
 @media(max-width:768px){
-  .title-group{
-    flex-direction:row;
-    flex-wrap:nowrap;
-    align-items:flex-end;
+  .hero .hero-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+  }
+  .hero .title-wrapper{
+    width:100%;
+    display:flex;
     justify-content:center;
   }
-  .salsette{ font-size:clamp(2rem, 9vw, 5rem); letter-spacing:.04em; }
-  .seven{
-    font-size:clamp(3.8rem, 18vw, 10rem);
-    margin-left:-0.12em;
+  .hero .title-group{
+    flex-direction:column;
+    flex-wrap:nowrap;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    gap: 4px;
   }
-  .tagline{ font-size:clamp(.85rem, 3.5vw, 1rem); letter-spacing:.1em; }
-  .cta a{ padding:.9rem 2rem; letter-spacing:.2em; }
+  .salsette{
+    font-size:clamp(2.15rem, 12vw, 5.25rem);
+    letter-spacing:.04em;
+  }
+  .seven{
+    font-size:clamp(3.65rem, 27vw, 10.25rem);
+    margin-left:0;
+    margin-top:-0.05em;
+  }
+  .tagline{
+    font-size:clamp(0.95rem, 4vw, 1.1rem);
+    letter-spacing:.08em;
+    line-height:1.78;
+    max-width:38ch;
+    margin-top:1.5rem;
+  }
+  .cta-group{
+    flex-direction:column;
+    align-items:stretch;
+    gap:.75rem;
+    width:100%;
+    max-width:280px;
+    align-self:center;
+  }
+  .cta a,
+  .cta button{
+    font-size:max(0.85rem, 14px);
+    min-height:44px;
+    padding:.9rem 1.5rem;
+    letter-spacing:.2em;
+  }
+  .scroll-cue-text{
+    font-size:.65rem;
+  }
 }
 @media(max-width:380px){
-  .salsette{ font-size:clamp(1.7rem, 8vw, 3rem); }
-  .seven{ font-size:clamp(3.2rem, 16vw, 6rem); margin-left:-0.28em; }
+  .salsette{ font-size:clamp(1.75rem, 8vw, 3.45rem); }
+  .seven{ font-size:clamp(3.05rem, 16vw, 6.25rem); margin-left:0; }
+  .tagline{ font-size:clamp(0.95rem, 3.5vw, 1.05rem); }
 }
 
 /* ═══════════════ BAND SECTION ═══════════════ */
@@ -514,11 +555,15 @@ body{
   align-items:center;
   justify-content:center;
   height:100%;
+  flex-shrink:0;
 }
 .band-arrow-btn{
   position:relative;
   width:clamp(48px, 5.5vw, 66px);
   height:clamp(48px, 5.5vw, 66px);
+  min-width:48px;
+  min-height:48px;
+  flex-shrink:0;
   border-radius:50%;
   border:1px solid var(--border);
   background:var(--glass);
@@ -875,8 +920,22 @@ body{
 /* Band mobile */
 @media(max-width:700px){
   .band-stage{
-    grid-template-columns:clamp(44px,12vw,64px) 1fr clamp(44px,12vw,64px);
-    padding:0 clamp(6px,2vw,14px);
+    grid-template-columns:48px 1fr 48px;
+    padding:0 clamp(10px,3vw,20px);
+    gap:0;
+  }
+  .band-nav-col{
+    min-width:48px;
+  }
+  .band-arrow-btn{
+    width:48px;
+    height:48px;
+    min-width:48px;
+    min-height:48px;
+  }
+  .band-arrow-btn svg{
+    width:20px;
+    height:20px;
   }
   .band-card-col{
     grid-template-columns:1fr;
@@ -893,7 +952,7 @@ body{
   .band-artist-bio{ font-size:clamp(.95rem,4vw,1.1rem); max-width:100%; }
 }
 @media(max-width:420px){
-  .band-stage{ grid-template-columns:40px 1fr 40px; }
+  .band-stage{ grid-template-columns:48px 1fr 48px; }
   .band-artist-bio{ font-size:.95rem; }
 }
 @media(max-width:700px) and (min-height:700px){
@@ -1133,4 +1192,163 @@ body{
   .light-sweep-glow{ display:none; }
   .bg-glow         { animation:none !important; }
   .scroll-cue-line { animation:none !important; }
+}
+
+/* ═══════════════ POLAROIDS (hero band photos) ═══════════════ */
+.polaroids-field{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.polaroid{
+  position:absolute;
+  display:flex;
+  flex-direction:column;
+  background:#f5f0e8;
+  padding:clamp(7px, 1vw, 11px);
+  padding-bottom:clamp(28px, 4vw, 44px);
+  width:clamp(110px, 14vw, 190px);
+  pointer-events:auto;
+  transform-origin:center center;
+  box-shadow:
+    0 1px 0 rgba(0,0,0,.08) inset,
+    0 12px 24px rgba(0,0,0,.55);
+}
+
+.polaroid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:140px;
+  pointer-events:none;
+  z-index:3;
+}
+
+.polaroid__photo{
+  position:relative;
+  width:100%;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  background:#1a1212;
+}
+
+.polaroid__photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  filter:saturate(0.82) contrast(1.06) brightness(0.95);
+  transition:filter .4s ease, transform .55s ease;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.polaroid:hover .polaroid__photo img{
+  filter:saturate(1.05) contrast(1.04) brightness(1);
+  transform:scale(1.04);
+}
+
+.polaroid__gloss{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.04) 30%, transparent 60%);
+  pointer-events:none;
+  z-index:2;
+  transition:opacity .4s ease;
+}
+
+.polaroid:hover .polaroid__gloss{ opacity:.4; }
+
+.polaroid__caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:clamp(28px, 4vw, 44px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+  padding:0 4px;
+}
+
+.polaroid__name{
+  font-family:"Caveat", "Segoe Script", "Bradley Hand", cursive;
+  font-size:clamp(10px, 1.3vw, 16px);
+  font-weight:700;
+  color:#2a1a1a;
+  line-height:1.1;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+
+.polaroid__role{
+  font-family:"Caveat", "Segoe Script", cursive;
+  font-size:clamp(7px, .85vw, 10px);
+  font-weight:400;
+  color:#7a5a4a;
+  letter-spacing:.04em;
+  opacity:.75;
+  white-space:nowrap;
+}
+
+.polaroid__tape{
+  position:absolute;
+  width:clamp(28px, 4vw, 48px);
+  height:clamp(14px, 1.8vw, 22px);
+  z-index:4;
+  background:
+    repeating-linear-gradient(-55deg, rgba(255,255,255,.18) 0px, rgba(255,255,255,.18) 2px, transparent 2px, transparent 6px),
+    var(--tape-color, rgba(196,162,78,.55));
+  box-shadow:0 1px 3px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+.polaroid__tape--tr{
+  --tape-color:rgba(196,162,78,.52);
+  top:-8px;
+  right:12px;
+  transform:rotate(6deg);
+}
+
+.polaroid__tape--tl{
+  --tape-color:rgba(110,26,26,.38);
+  top:-8px;
+  left:12px;
+  transform:rotate(-8deg);
+}
+
+@media(max-width:600px){
+  .polaroid{
+    width:clamp(75px, 28vw, 130px);
+    padding:5px;
+    padding-bottom:clamp(26px, 9vw, 36px);
+  }
+  .polaroid__name{ font-size:clamp(11px, 3.5vw, 15px); }
+  .polaroid__role{ font-size:clamp(9px, 2.5vw, 11px); }
+  .polaroid__caption{ height:clamp(26px, 9vw, 36px); }
+  .polaroid__tape{
+    width:clamp(22px, 7vw, 36px);
+    height:clamp(11px, 3.5vw, 18px);
+  }
+}
+
+@media(max-width:380px){
+  .polaroid{
+    width:clamp(68px, 26vw, 110px);
+    padding-bottom:clamp(24px, 8vw, 32px);
+  }
+  .polaroid__name{ font-size:11px; }
+  .polaroid__role{ font-size:9px; }
+  .polaroid__caption{ height:clamp(24px, 8vw, 32px); }
+}
+
+@media(prefers-reduced-motion: reduce){
+  .polaroid{ animation:none !important; transition:none !important; }
 }

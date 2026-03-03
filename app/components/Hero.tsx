@@ -102,55 +102,55 @@ export default function Hero() {
         {
           opacity: 1,
           filter: "blur(0px) drop-shadow(0 0 0px rgba(196,162,78,0))",
-          duration: 1.6,
+          duration: 1.1,
           ease: "power2.out",
           keyframes: [
             {
               filter: "blur(18px) drop-shadow(0 0 48px rgba(196,162,78,0.45))",
               opacity: 0.6,
-              duration: 0.64,
+              duration: 0.44,
               ease: "power1.in",
             },
             {
               filter: "blur(0px) drop-shadow(0 0 0px rgba(196,162,78,0))",
               opacity: 1,
-              duration: 0.96,
+              duration: 0.66,
               ease: "power3.out",
             },
           ],
         }
       )
-      .to(seven, { scaleY: 0.96, scaleX: 1.02, duration: 0.18, ease: "power2.in"         }, "-=0.05")
-      .to(seven, { scaleY: 1,    scaleX: 1,    duration: 0.6,  ease: "elastic.out(1,0.5)" })
-      .to(salsette, { x: 0, duration: 0.95, ease: "expo.out" }, "-=0.45")
+      .to(seven, { scaleY: 0.96, scaleX: 1.02, duration: 0.12, ease: "power2.in"         }, "-=0.04")
+      .to(seven, { scaleY: 1,    scaleX: 1,    duration: 0.4,  ease: "elastic.out(1,0.5)" })
+      .to(salsette, { x: 0, duration: 0.65, ease: "expo.out" }, "-=0.35")
       .to(
         salChars,
         {
           opacity: 1,
           filter: "blur(0px)",
-          duration: 0.35,
-          stagger: { amount: 0.32, from: "start", ease: "sine.inOut" },
+          duration: 0.28,
+          stagger: { amount: 0.24, from: "start", ease: "sine.inOut" },
           ease: "power2.out",
         },
-        "-=0.45"
+        "-=0.4"
       )
       .set(sweepEl, { opacity: 1 })
-      .to(sweepEl, { left: "160%", duration: 0.75, ease: "power2.in" }, "+=0.05")
-      .to(sweepEl, { opacity: 0, duration: 0.15, ease: "none" }, "-=0.15")
-      .set(sweepGlowEl, { left: "-80%", opacity: 0 }, "<-0.6")
-      .to(sweepGlowEl, { left: "180%", opacity: 0.6, duration: 1.1, ease: "power1.out" }, "<")
-      .to(sweepGlowEl, { opacity: 0, duration: 0.4, ease: "power2.in" }, "-=0.4")
+      .to(sweepEl, { left: "160%", duration: 0.5, ease: "power2.in" }, "+=0.04")
+      .to(sweepEl, { opacity: 0, duration: 0.12, ease: "none" }, "-=0.12")
+      .set(sweepGlowEl, { left: "-80%", opacity: 0 }, "<-0.45")
+      .to(sweepGlowEl, { left: "180%", opacity: 0.6, duration: 0.75, ease: "power1.out" }, "<")
+      .to(sweepGlowEl, { opacity: 0, duration: 0.28, ease: "power2.in" }, "-=0.28")
       .to(
         tagGroups[0],
         {
           opacity: 1,
           filter: "blur(0px)",
           y: 0,
-          duration: 0.35,
-          stagger: { amount: 0.28, from: "start", ease: "sine.inOut" },
+          duration: 0.28,
+          stagger: { amount: 0.22, from: "start", ease: "sine.inOut" },
           ease: "power2.out",
         },
-        "-=0.45"
+        "-=0.35"
       )
       .to(
         tagGroups[1],
@@ -158,25 +158,25 @@ export default function Hero() {
           opacity: 1,
           filter: "blur(0px)",
           y: 0,
-          duration: 0.35,
-          stagger: { amount: 0.3, from: "start", ease: "sine.inOut" },
+          duration: 0.28,
+          stagger: { amount: 0.24, from: "start", ease: "sine.inOut" },
           ease: "power2.out",
         },
-        "-=0.25"
+        "-=0.2"
       )
       .fromTo(
         ".cta a, .cta button",
         { y: 20, opacity: 0, filter: "blur(6px)" },
         {
           y: 0, opacity: 1, filter: "blur(0px)",
-          stagger: 0.13, duration: 0.6, ease: "power3.out",
+          stagger: 0.09, duration: 0.42, ease: "power3.out",
         },
-        "-=0.25"
+        "-=0.2"
       )
       .to(
         scrollCueRef.current,
-        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
-        "-=0.1"
+        { opacity: 1, y: 0, duration: 0.38, ease: "power2.out" },
+        "-=0.08"
       );
 
       heroRef.current!
