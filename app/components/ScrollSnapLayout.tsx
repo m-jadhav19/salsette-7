@@ -14,24 +14,23 @@ const MOBILE_BREAKPOINT = 768;
 export default function ScrollSnapLayout() {
   useEffect(() => {
     const isMobile = () => window.innerWidth <= MOBILE_BREAKPOINT;
-    const panels = gsap.utils.toArray<HTMLElement>(".section");
-    panels.pop(); // exclude last section (Contact) from scale/fade
+    if (isMobile()) return;
 
-    panels.forEach((panel, i) => {
+    const panels = gsap.utils.toArray<HTMLElement>(".section");
+    panels.pop();
+
+    panels.forEach((panel) => {
       const innerPanel = panel.querySelector<HTMLElement>(".section-inner");
       const contentEl = innerPanel ?? panel;
       const panelHeight = contentEl.offsetHeight;
       const windowHeight = window.innerHeight;
       const difference = panelHeight - windowHeight;
-
-      // ratio for fake-scrolling when content is taller than viewport
       const fakeScrollRatio = difference > 0 ? difference / (difference + windowHeight) : 0;
 
       if (fakeScrollRatio && panel instanceof HTMLElement) {
         panel.style.marginBottom = `${panelHeight * fakeScrollRatio}px`;
       }
 
-      const mobile = isMobile();
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
@@ -39,13 +38,12 @@ export default function ScrollSnapLayout() {
           end: fakeScrollRatio ? `+=${contentEl.offsetHeight}` : "bottom top",
           pinSpacing: false,
           pin: true,
-          scrub: mobile ? 2 : true,
+          scrub: 1.5,
           anticipatePin: 1,
         },
       });
 
-      // fake scroll through tall content first (skip on mobile to reduce glitchiness)
-      if (fakeScrollRatio && innerPanel && !mobile) {
+      if (fakeScrollRatio && innerPanel) {
         tl.to(
           innerPanel,
           {
@@ -59,18 +57,20 @@ export default function ScrollSnapLayout() {
       }
 
       const scaleTarget = panel.querySelector<HTMLElement>(".section-content") ?? panel;
-      const scaleTo = mobile ? 0.92 : 0.7;
-      const opacityTo = mobile ? 0.85 : 0.5;
       tl.fromTo(
         scaleTarget,
         { scale: 1, opacity: 1 },
-        { scale: scaleTo, opacity: opacityTo, duration: 0.9 },
-        fakeScrollRatio && !mobile ? undefined : 0
+        { scale: 0.7, opacity: 0.5, duration: 0.9 },
+        fakeScrollRatio ? undefined : 0
       ).to(scaleTarget, { opacity: 0, duration: 0.1 });
     });
 
     const onResize = () => {
-      ScrollTrigger.refresh();
+      if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        ScrollTrigger.getAll().forEach((st) => st.kill());
+      } else {
+        ScrollTrigger.refresh();
+      }
     };
     window.addEventListener("resize", onResize);
 
