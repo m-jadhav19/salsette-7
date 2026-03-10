@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { log, logSlow, timedAsync } from "../utils/perf";
 
 const ARTISTS = [
   {
     name: "MARILYN",
     role: "Vocals",
     bio: "Glam-rock stage fire with velvet control. Her voice cuts through walls of distortion like silk through smoke.",
-    img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=700&q=80",
+    img: "/marilyn/marylin.jpg",
+    video: "/marilyn/marilyn.MOV",
     tint: "rgba(220,60,130,.18)",
     search: "Lady Gaga",
   },
@@ -15,7 +17,8 @@ const ARTISTS = [
     name: "DALEER",
     role: "Vocals",
     bio: "Charisma heavy and spotlight hungry. Delivers each lyric like a final confession before the house lights die.",
-    img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=700&q=80",
+    img: "/daleer/daleer.jpg",
+    video: "/daleer/daleer.MOV",
     tint: "rgba(50,110,255,.18)",
     search: "Linkin Park",
   },
@@ -23,7 +26,8 @@ const ARTISTS = [
     name: "ATHARVA",
     role: "Lead Guitar",
     bio: "Melodic but sharp — classic phrasing with modern bite. Every solo tells a story words simply can't reach.",
-    img: "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?w=700&q=80",
+    img: "/atharva/atharva.jpg",
+    video: "/atharva/atharva.MOV",
     tint: "rgba(225,155,45,.18)",
     search: "Bon Jovi",
   },
@@ -31,7 +35,8 @@ const ARTISTS = [
     name: "ABIR",
     role: "Bass Guitar",
     bio: "Low frequencies, seismic impact. The invisible force that glues the chaos into something inevitable.",
-    img: "https://images.unsplash.com/photo-1518972559570-7cc1309f3229?w=700&q=80",
+    img: "/abir/abir.jpg",
+    video: "/abir/abir.MOV",
     tint: "rgba(44,198,198,.18)",
     search: "Arctic Monkeys",
   },
@@ -39,7 +44,8 @@ const ARTISTS = [
     name: "KARTIK",
     role: "Drums",
     bio: "The rhythmic engine of beautiful chaos. He doesn't keep time — he bends it until the room shakes.",
-    img: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=700&q=80",
+    img: "/kartik/kartik.jpg",
+    video: "/kartik/kartik.MOV",
     tint: "rgba(122,31,31,.28)",
     search: "Metallica",
   },
@@ -47,7 +53,8 @@ const ARTISTS = [
     name: "JOANNA",
     role: "Keyboards",
     bio: "Jazz textures meet cathedral reverbs. She finds the emotional undertow beneath every riff and makes it ache.",
-    img: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=700&q=80",
+    img: "/joanna/joanna.jpg",
+    video: "/joanna/joanna.MOV",
     tint: "rgba(255,70,110,.18)",
     search: "Tame Impala",
   },
@@ -56,6 +63,7 @@ const ARTISTS = [
     role: "Rhythm Guitar",
     bio: "Classic rock soul, modern grit. The backbone that lets every frontman believe they're carrying the whole band.",
     img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=700&q=80",
+    video: null,
     tint: "rgba(196,162,78,.18)",
     search: "The Rolling Stones",
   },
@@ -128,7 +136,9 @@ export default function BandSection() {
 
       let t = cacheRef.current.get(idx) ?? null;
       if (!t) {
-        t = await fetchTrack(ARTISTS[idx].search);
+        t = await timedAsync(`BandSection fetchTrack(${ARTISTS[idx].name})`, () =>
+          fetchTrack(ARTISTS[idx].search)
+        );
         if (t) cacheRef.current.set(idx, t);
       }
 
@@ -167,6 +177,8 @@ export default function BandSection() {
     (newIdx: number, dir: 1 | -1) => {
       if (busyRef.current) return;
       busyRef.current = true;
+      const t0 = performance.now();
+      log(`BandSection: slide to ${ARTISTS[newIdx].name} (${dir > 0 ? "next" : "prev"})`);
 
       const exitClass = dir > 0 ? "slide-exit-left" : "slide-exit-right";
       const enterClass = dir > 0 ? "slide-enter-right" : "slide-enter-left";
@@ -185,6 +197,9 @@ export default function BandSection() {
         setTimeout(() => {
           setSlideClass("");
           busyRef.current = false;
+          const ms = performance.now() - t0;
+          log(`BandSection: slide complete in ${ms.toFixed(0)}ms`);
+          logSlow("BandSection slide", ms);
         }, 440);
       }, 360);
     },
@@ -201,10 +216,16 @@ export default function BandSection() {
     go((cur - 1 + ARTISTS.length) % ARTISTS.length, -1);
   }, [cur, go]);
 
+  useEffect(() => {
+    log("BandSection: mount");
+  }, []);
+
   // Load track whenever cur changes; loadTrack only sets state after async awaits
   useEffect(() => {
     void loadTrack(cur);
     prefetch(cur);
+    const artist = ARTISTS[cur];
+    if (artist.video) log(`BandSection: showing video for ${artist.name}`);
   }, [cur, loadTrack, prefetch]);
 
   // Keyboard
@@ -341,8 +362,22 @@ export default function BandSection() {
               <span className="band-corner bl" />
               <span className="band-corner br" />
               <div className="band-img-frame">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={artist.img} alt={artist.name} draggable={false} />
+                {artist.video ? (
+                  <video
+                    key={artist.name}
+                    src={artist.video}
+                    poster={artist.img}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="band-member-video"
+                    aria-label={artist.name}
+                  />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={artist.img} alt={artist.name} draggable={false} />
+                )}
               </div>
               <div className="band-artist-num">{numStr}</div>
             </div>

@@ -45,11 +45,7 @@ export default function ContactSection() {
             <h2 className="contact-title">
               SALSETTE<em className="contact-title-seven"> 7</em>
             </h2>
-            <div className="contact-sub">
-            <p>Built for the stage</p>
-            <p>Ready for yours</p>
-            <p>Book The Salsette 7</p>
-            </div>
+            <p className="contact-sub">Seven Mumbai kids. Book us for your next gig.</p>
 
             <div className="contact-cards" ref={cardsRef}>
               <a href="mailto:thesalsette7@gmail.com" className="contact-card">

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { log, timed, startFPSLogger } from "../utils/perf";
 import Hero from "./Hero";
 import BandSection from "./BandSection";
 import ContactSection from "./ContactSection";
@@ -13,13 +14,21 @@ const MOBILE_BREAKPOINT = 768;
 
 export default function ScrollSnapLayout() {
   useEffect(() => {
+    log("ScrollSnapLayout: mount");
+    const stopFPS = startFPSLogger(4000);
+
     const isMobile = () => window.innerWidth <= MOBILE_BREAKPOINT;
-    if (isMobile()) return;
+    if (isMobile()) {
+      log("ScrollSnapLayout: mobile — ScrollTrigger skipped");
+      return stopFPS;
+    }
 
-    const panels = gsap.utils.toArray<HTMLElement>(".section");
-    panels.pop();
+    timed("ScrollTrigger setup", () => {
+      const panels = gsap.utils.toArray<HTMLElement>(".section");
+      panels.pop();
+      log(`ScrollSnapLayout: ${panels.length} panels`);
 
-    panels.forEach((panel) => {
+      panels.forEach((panel) => {
       const innerPanel = panel.querySelector<HTMLElement>(".section-inner");
       const contentEl = innerPanel ?? panel;
       const panelHeight = contentEl.offsetHeight;
@@ -63,6 +72,7 @@ export default function ScrollSnapLayout() {
         { scale: 0.7, opacity: 0.5, duration: 0.9 },
         fakeScrollRatio ? undefined : 0
       ).to(scaleTarget, { opacity: 0, duration: 0.1 });
+      });
     });
 
     const onResize = () => {
@@ -75,6 +85,7 @@ export default function ScrollSnapLayout() {
     window.addEventListener("resize", onResize);
 
     return () => {
+      stopFPS();
       window.removeEventListener("resize", onResize);
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
