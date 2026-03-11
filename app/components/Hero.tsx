@@ -16,25 +16,28 @@ export default function Hero() {
     log("Hero: mount start");
     if (!heroRef.current) return;
 
-    const ctx = gsap.context(() => {
-      // ── Query elements ────────────────────────────────────────────────────
-      const root        = heroRef.current!;
-      const splash      = root.querySelector<HTMLElement>(".hero-splash")!;
-      const sevenTop    = root.querySelector<HTMLElement>(".hero-splash-seven-top")!;
-      const sevenBot    = root.querySelector<HTMLElement>(".hero-splash-seven-bot")!;
-      const splitLine   = root.querySelector<HTMLElement>(".hero-splash-split-line")!;
-      const splashSub   = root.querySelector<HTMLElement>(".hero-splash-sub")!;
-      const heroEyebrow = root.querySelector<HTMLElement>(".hero-eyebrow")!;
-      const tagline     = root.querySelector<HTMLElement>(".tagline")!;
-      const ctas        = root.querySelector<HTMLElement>(".cta-group")!;
+    const root = heroRef.current!;
+    const splash = document.querySelector<HTMLElement>(".hero-splash");
+    if (!splash) return;
 
-      gsap.set([sevenTop, sevenBot], { x: 0, y: 0 });
-      gsap.set(splitLine, { opacity: 0, scaleX: 0 });
-      gsap.set(splashSub, { opacity: 0, y: 6 });
-      gsap.set([heroEyebrow, tagline, ctas, scrollCueRef.current], {
-        opacity: 0,
-        y: 8,
-      });
+    const ctx = gsap.context(() => {
+      // ── Query elements (splash lives in layout; hero content in root) ───────
+      const sevenTop    = splash.querySelector<HTMLElement>(".hero-splash-seven-top");
+      const sevenBot    = splash.querySelector<HTMLElement>(".hero-splash-seven-bot");
+      const splitLine   = splash.querySelector<HTMLElement>(".hero-splash-split-line");
+      const splashSub   = splash.querySelector<HTMLElement>(".hero-splash-sub");
+      const heroEyebrow = root.querySelector<HTMLElement>(".hero-eyebrow");
+      const tagline     = root.querySelector<HTMLElement>(".tagline");
+      const ctas        = root.querySelector<HTMLElement>(".cta-group");
+      const scrollCue   = scrollCueRef.current;
+
+      const heroReveal = [heroEyebrow, tagline, ctas, scrollCue].filter(Boolean) as HTMLElement[];
+      if (heroReveal.length) {
+        gsap.set(heroReveal, { opacity: 0, y: 8 });
+      }
+      if (sevenTop && sevenBot) gsap.set([sevenTop, sevenBot], { x: 0, y: 0 });
+      if (splitLine) gsap.set(splitLine, { opacity: 0, scaleX: 0 });
+      if (splashSub) gsap.set(splashSub, { opacity: 0, y: 6 });
 
       // ── Master timeline ───────────────────────────────────────────────────
       mark("hero-timeline-start");
@@ -46,45 +49,51 @@ export default function Hero() {
         },
       });
 
-      tl.to({}, { duration: 0.9 })
-        .to(splashSub, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.1")
-        .to({}, { duration: 0.55 })
-        .to(splitLine, { opacity: 1, scaleX: 1, duration: 0.18, ease: "power4.out" })
-        .to(splitLine, { opacity: 0, duration: 0.12, ease: "none" }, "+=0.06")
-        .to(
-          sevenTop,
-          { x: "-42vw", y: "-55vh", rotation: -8, duration: 0.72, ease: "power4.in" },
-          "-=0.04"
-        )
-        .to(
-          sevenBot,
-          { x: "44vw", y: "58vh", rotation: 9, duration: 0.72, ease: "power4.in" },
-          "<"
-        )
-        .to(splashSub, { opacity: 0, duration: 0.22, ease: "none" }, "<")
-        .fromTo(splash, { filter: "brightness(1)" }, { filter: "brightness(3)", duration: 0.08, ease: "none" }, "<+0.3")
+      const hasSevenSplit = sevenTop && sevenBot && splitLine;
+      if (hasSevenSplit && splashSub) {
+        tl.to({}, { duration: 0.9 })
+          .to(splashSub, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.1")
+          .to({}, { duration: 0.55 })
+          .to(splitLine, { opacity: 1, scaleX: 1, duration: 0.18, ease: "power4.out" })
+          .to(splitLine, { opacity: 0, duration: 0.12, ease: "none" }, "+=0.06")
+          .to(sevenTop, { x: "-42vw", y: "-55vh", rotation: -8, duration: 0.72, ease: "power4.in" }, "-=0.04")
+          .to(sevenBot, { x: "44vw", y: "58vh", rotation: 9, duration: 0.72, ease: "power4.in" }, "<")
+          .to(splashSub, { opacity: 0, duration: 0.22, ease: "none" }, "<");
+      } else if (splashSub) {
+        tl.to({}, { duration: 0.9 })
+          .to(splashSub, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.1")
+          .to({}, { duration: 0.8 })
+          .to(splashSub, { opacity: 0, duration: 0.22, ease: "none" });
+      }
+
+      tl.fromTo(splash, { filter: "brightness(1)" }, { filter: "brightness(3)", duration: 0.08, ease: "none" }, hasSevenSplit ? "<+0.3" : undefined)
         .to(splash, { filter: "brightness(1)", duration: 0.1, ease: "none" })
         .to(splash, {
           opacity: 0,
           duration: 0.35,
           ease: "power2.out",
           onComplete: () => splash.classList.add("hero-splash-hidden"),
-        }, "-=0.1")
-        .to(heroEyebrow, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, "<+0.1")
-        .to(tagline, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, "<+0.12")
-        .to(ctas, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "<+0.08")
-        .to(scrollCueRef.current, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "<+0.08");
+        }, "-=0.1");
+      if (heroReveal.length) {
+        tl.to(heroReveal, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, "<+0.1");
+      }
 
-      // ── Magnetic CTA hover ────────────────────────────────────────────────
+      // ── Magnetic CTA hover (rAF-throttled to avoid lag during scroll/hover) ─
+      let ctaRafId = 0;
       root.querySelectorAll<HTMLElement>(".cta a, .cta button").forEach((btn) => {
         const onMove = (e: MouseEvent) => {
-          const r = btn.getBoundingClientRect();
-          gsap.to(btn, {
-            x: (e.clientX - (r.left + r.width  / 2)) * 0.25,
-            y: (e.clientY - (r.top  + r.height / 2)) * 0.25,
-            duration: 0.38,
-            ease: "power2.out",
-            overwrite: true,
+          if (ctaRafId) return;
+          ctaRafId = requestAnimationFrame(() => {
+            ctaRafId = 0;
+            const r = btn.getBoundingClientRect();
+            gsap.to(btn, {
+              x: (e.clientX - (r.left + r.width  / 2)) * 0.25,
+              y: (e.clientY - (r.top  + r.height / 2)) * 0.25,
+              duration: 0.38,
+              ease: "power2.out",
+              overwrite: true,
+              force3D: true,
+            });
           });
         };
         const onLeave = () =>
@@ -94,10 +103,12 @@ export default function Hero() {
         btn.addEventListener("mouseleave", onLeave);
       });
 
-      // ── 3D tilt on mouse move ─────────────────────────────────────────────
+      // ── 3D tilt on mouse move (time-throttled to reduce work during scroll) ──
       const bgPhotos   = root.querySelectorAll<HTMLElement>(".hero-bg-photo, .hero-bg-video-el");
       const bgVignette = root.querySelector<HTMLElement>(".hero-bg-vignette");
       let   rafId      = 0;
+      let   lastTiltAt = 0;
+      const TILT_THROTTLE_MS = 48;
 
       const parallaxSample = sampleLog("Hero parallax", 90);
       const onTiltMove = (e: MouseEvent) => {
@@ -106,9 +117,13 @@ export default function Hero() {
         if (rafId) return;
         rafId = requestAnimationFrame(() => {
           rafId = 0;
+          const now = performance.now();
+          if (now - lastTiltAt < TILT_THROTTLE_MS) return;
+          lastTiltAt = now;
           parallaxSample();
           const t0 = performance.now();
-          [...bgPhotos, bgVignette].forEach((el) => {
+          const els = [...bgPhotos, bgVignette].filter(Boolean);
+          els.forEach((el) => {
             if (!el) return;
             gsap.to(el, {
               x: -nx * 24,
@@ -116,6 +131,7 @@ export default function Hero() {
               duration: 1.0,
               ease: "power2.out",
               overwrite: true,
+              force3D: true,
             });
           });
           const tiltMs = performance.now() - t0;
@@ -126,7 +142,7 @@ export default function Hero() {
       const onTiltLeave = () =>
         gsap.to(
           [...bgPhotos, bgVignette].filter(Boolean) as HTMLElement[],
-          { x: 0, y: 0, duration: 0.9, ease: "power2.out" }
+          { x: 0, y: 0, duration: 0.9, ease: "power2.out", force3D: true }
         );
 
       root.addEventListener("mousemove",  onTiltMove,  { passive: true });
@@ -138,8 +154,9 @@ export default function Hero() {
         root.removeEventListener("mousemove",  onTiltMove);
         root.removeEventListener("mouseleave", onTiltLeave);
         if (rafId) cancelAnimationFrame(rafId);
+        if (ctaRafId) cancelAnimationFrame(ctaRafId);
       };
-    }, heroRef);
+    }, root);
 
     return () => ctx.revert();
   }, []);
@@ -169,69 +186,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={heroRef} className="hero scroll-panel section">
+    <section ref={heroRef} id="hero" className="hero scroll-panel section">
       <div className="section-content">
         <div className="section-inner">
-          <div className="hero-splash">
-            <div className="hero-splash-bg-lines" />
-            <div className="hero-splash-seven-wrap">
-              <div className="hero-splash-seven-top">
-                <svg viewBox="0 0 500 660" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                  <defs>
-                    <linearGradient id="metalTop" x1="0" y1="0" x2="0.85" y2="1" gradientUnits="objectBoundingBox">
-                      <stop offset="0%" stopColor="#fdf8ee" />
-                      <stop offset="10%" stopColor="#ead9aa" />
-                      <stop offset="26%" stopColor="#c9a96e" />
-                      <stop offset="45%" stopColor="#a07840" />
-                      <stop offset="64%" stopColor="#7a5c28" />
-                      <stop offset="80%" stopColor="#9a7838" />
-                      <stop offset="100%" stopColor="#c8a458" />
-                    </linearGradient>
-                    <linearGradient id="sheenTop" x1="0.15" y1="0" x2="0.65" y2="0.6" gradientUnits="objectBoundingBox">
-                      <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="42%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="52%" stopColor="rgba(255,255,255,0.15)" />
-                      <stop offset="62%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                    </linearGradient>
-                  </defs>
-                  <polygon points="40,40 460,40 460,140 230,620 140,620 370,140 40,140" fill="url(#metalTop)" />
-                  <polygon points="40,40 460,40 460,140 230,620 140,620 370,140 40,140" fill="url(#sheenTop)" />
-                  <line x1="41" y1="41" x2="459" y2="41" stroke="rgba(253,248,230,0.65)" strokeWidth="2" />
-                  <line x1="41" y1="42" x2="41" y2="138" stroke="rgba(253,248,230,0.4)" strokeWidth="1.5" />
-                  <line x1="371" y1="142" x2="141" y2="618" stroke="rgba(253,248,230,0.18)" strokeWidth="1.5" />
-                  <line x1="459" y1="142" x2="229" y2="618" stroke="rgba(0,0,0,0.22)" strokeWidth="2" />
-                </svg>
-              </div>
-              <div className="hero-splash-seven-bot">
-                <svg viewBox="0 0 500 660" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                  <defs>
-                    <linearGradient id="metalBot" x1="0" y1="0" x2="0.85" y2="1" gradientUnits="objectBoundingBox">
-                      <stop offset="0%" stopColor="#c9a96e" />
-                      <stop offset="22%" stopColor="#a07840" />
-                      <stop offset="46%" stopColor="#7a5c28" />
-                      <stop offset="66%" stopColor="#6a4c18" />
-                      <stop offset="82%" stopColor="#8a6830" />
-                      <stop offset="100%" stopColor="#b89050" />
-                    </linearGradient>
-                    <linearGradient id="sheenBot" x1="0.15" y1="0" x2="0.65" y2="0.6" gradientUnits="objectBoundingBox">
-                      <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="44%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="52%" stopColor="rgba(255,255,255,0.08)" />
-                      <stop offset="60%" stopColor="rgba(255,255,255,0)" />
-                      <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                    </linearGradient>
-                  </defs>
-                  <polygon points="40,40 460,40 460,140 230,620 140,620 370,140 40,140" fill="url(#metalBot)" />
-                  <polygon points="40,40 460,40 460,140 230,620 140,620 370,140 40,140" fill="url(#sheenBot)" />
-                  <line x1="459" y1="142" x2="229" y2="618" stroke="rgba(0,0,0,0.28)" strokeWidth="2" />
-                </svg>
-              </div>
-              <div className="hero-splash-split-line" />
-            </div>
-            <div className="hero-splash-sub">SALSETTE&nbsp;&nbsp;·&nbsp;&nbsp;MUMBAI&nbsp;&nbsp;·&nbsp;&nbsp;2025</div>
-          </div>
-
           {/* Background video + layers */}
           <div className="hero-bg-video">
             <video

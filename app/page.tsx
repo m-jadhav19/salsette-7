@@ -1,6 +1,6 @@
-import ScrollSnapLayout from "./components/ScrollSnapLayout";
+import ParallaxLayout from "./components/ParallaxLayout";
 
 export default function Home() {
-  return <ScrollSnapLayout />;
+  return <ParallaxLayout />;
 }
 
