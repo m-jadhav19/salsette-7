@@ -147,6 +147,7 @@ export default function BandSection() {
   const mDownRef   = useRef(false);
   const cardRef    = useRef<HTMLDivElement | null>(null);
   const autoScrollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isVisibleRef  = useRef(false);
 
   // ── audio helpers ────────────────────────────────────────────────────────────
   const stopAudio = useCallback(() => {
@@ -243,13 +244,23 @@ export default function BandSection() {
     return () => { a.pause(); a.removeEventListener("play", onPlay); a.removeEventListener("pause", onPause); a.removeEventListener("ended", onEnded); if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
-  // auto-advance carousel
+  // auto-advance carousel (only when visible)
   const AUTO_SCROLL_MS = 5500;
   useEffect(() => {
+    const section = document.getElementById("band");
+    if (!section) return;
+
+    const obs = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0.1 });
+    obs.observe(section);
+
     autoScrollRef.current = setInterval(() => {
-      goNext();
+      if (isVisibleRef.current) goNext();
     }, AUTO_SCROLL_MS);
+
     return () => {
+      obs.disconnect();
       if (autoScrollRef.current) clearInterval(autoScrollRef.current);
     };
   }, [goNext]);
@@ -257,8 +268,8 @@ export default function BandSection() {
   // keyboard
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); goNext(); }
-      if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   { e.preventDefault(); goPrev(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
+      if (e.key === "ArrowLeft")  { e.preventDefault(); goPrev(); }
     };
     window.addEventListener("keydown", fn);
     return () => window.removeEventListener("keydown", fn);
@@ -509,7 +520,6 @@ export default function BandSection() {
             {/* video or image */}
             {artist.video ? (
               <video
-                key={artist.name}
                 src={artist.video}
                 poster={artist.img}
                 autoPlay
@@ -628,7 +638,12 @@ export default function BandSection() {
                     color: trackLoading ? "rgba(255,255,255,.35)" : "rgba(255,255,255,.78)",
                     fontSize: "clamp(10px,1.75vw,12px)",
                     fontFamily: "'Cinzel',serif",
-                    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                    lineHeight: 1.3,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}>
                     {trackLoading ? "Loading…" : (track?.name ?? "—")}
                   </div>

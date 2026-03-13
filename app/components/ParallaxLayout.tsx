@@ -20,6 +20,12 @@ export default function ParallaxLayout() {
     const sections = main.querySelectorAll<HTMLElement>(".section");
     const contentSelector = ".section-content";
 
+    // Start at top on refresh
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
     const update = () => {
       tickingRef.current = false;
       const scrollY = window.scrollY;
